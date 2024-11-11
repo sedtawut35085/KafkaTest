@@ -2,6 +2,8 @@ const { KafkaClient } = require("../config/kafkaConfig")
 const { KAFKA_GROUP_ID, KAFKA_TEST_TOPIC } = require("../config/index")
 const FUNCTIONAL_LOCATION_AND_EQUIPMENT_MASTER = require("../src/service/FUNCTIONAL.LOCATION.AND.EQUIPMENT.MASTER");
 const FUNCTIONAL_EQUIPMENT_MASTER = require("../src/service/FUNCTIONAL.EQUIPMENT.MASTER")
+const FUNCTIONAL_MDM = require("../src/service/MATERIAL");
+
 const consumer_TEST = KafkaClient.consumer({
     groupId: KAFKA_GROUP_ID,
     sessionTimeout: 60 * 1000
@@ -44,17 +46,18 @@ const run = async () => {
                 });
       
                 try {
-
                   const dataFromKafka = JSON.parse(message.value.toString());
                   switch (batch.topic) {
-                    case "SIT.CPF.TH.SAP.EQUIPMENT.MASTER":
-                      console.log("Calling FUNCTIONAL_EQUIPMENT.MASTER");
-                      console.log(" **** DATA FROM KAFKA !!!!", dataFromKafka);
-      
+                    case "SIT.CPF.FOOD.OMS.TEST.WORK.CENTER":
+                      console.log("Calling FUNCTIONAL_EQUIPMENT_MASTER");
+                      console.log("dataFromKafka : ", dataFromKafka);
                       await FUNCTIONAL_EQUIPMENT_MASTER.select(
                         dataFromKafka
                       ).catch((err) => {
-                        console.log("error in FUNCTIONAL.EQUIPMENT.MASTER => ", err);
+                        console.log(
+                          "error in FUNCTIONAL_EQUIPMENT_MASTER => ",
+                          err
+                        );
                       });
                       break;
                     default:

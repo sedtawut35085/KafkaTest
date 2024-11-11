@@ -7,11 +7,11 @@ const {
   NODE_POSTGRES_DATABASE,
 } = require("./index");
 const pool = new Pool({
-  host: "rdsomsenguat.cc4wksboyk3y.ap-southeast-1.rds.amazonaws.com",
+  host: "localhost",
   port: "5432",
-  user: "omsengcfg",
-  password: "UidTTj#09mcnZ",
-  database: "OMSENG",
+  user: "postgres",
+  password: "postgres",
+  database: "postgres",
 });
 
 pool.on("error", (error) => {
